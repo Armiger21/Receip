@@ -1,4 +1,4 @@
-namespace Receip.Models
+namespace Recipe.Models
 {
     public class ErrorViewModel
     {
