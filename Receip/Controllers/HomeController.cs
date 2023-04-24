@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Receip.Models;
+using Recipe.Models;
 using System.Diagnostics;
 
-namespace Receip.Controllers
+namespace Recipe.Controllers
 {
     public class HomeController : Controller
     {
