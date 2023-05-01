@@ -11,9 +11,16 @@ namespace Recipe.Models
         public RecipeContext(DbContextOptions<RecipeContext> options) : base(options) { }
 
         public DbSet<Recipes> Recipes { get; set; }
+
+        public DbSet<Ingredient> ingredients { get; set; }
         public DbSet<RecipeStep> RecipeSteps { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Ingredient>().ToTable("Ingredient");
+            modelBuilder.Entity<RecipeStep>().ToTable("RecipeSteps");
+
             modelBuilder.Entity<RecipeStep>().HasKey(s => new { s.RecipeId, s.StepNumber });
         }
     }

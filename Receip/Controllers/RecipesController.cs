@@ -21,9 +21,9 @@ namespace Recipe.Controllers
         // GET: Recipes
         public async Task<IActionResult> Index()
         {
-              return _context.Recipes != null ? 
-                          View(await _context.Recipes.ToListAsync()) :
-                          Problem("Entity set 'RecipeContext.Recipes'  is null.");
+            return _context.Recipes != null ?
+                        View(await _context.Recipes.ToListAsync()) :
+                        Problem("Entity set 'RecipeContext.Recipes'  is null.");
         }
 
         // GET: Recipes/Details/5
@@ -34,7 +34,8 @@ namespace Recipe.Controllers
                 return NotFound();
             }
 
-            var recipe = await _context.Recipes
+
+            var recipe = await _context.Recipes.Include(s => s.Steps).Include(i => i.Ingredients)
                 .FirstOrDefaultAsync(m => m.RecipeId == id);
             if (recipe == null)
             {
@@ -149,14 +150,14 @@ namespace Recipe.Controllers
             {
                 _context.Recipes.Remove(recipe);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool RecipeExists(int id)
         {
-          return (_context.Recipes?.Any(e => e.RecipeId == id)).GetValueOrDefault();
+            return (_context.Recipes?.Any(e => e.RecipeId == id)).GetValueOrDefault();
         }
     }
 }
