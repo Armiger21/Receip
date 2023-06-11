@@ -36,12 +36,13 @@ namespace Recipe.Models
         public string Title { get; set; }
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
-        [Required]
+
         public List<Ingredient> Ingredients { get; set; }
-        [Required]
+
         public List<RecipeStep> Steps { get; set; }
-        [DataType(DataType.Upload)]
-        public byte[]? Picture { get; set; }
+
+        [DataType(DataType.Text)]
+        public string Picture { get; set; }
         
     }
 }
