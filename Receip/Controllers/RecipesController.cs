@@ -58,12 +58,12 @@ namespace Recipe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RecipeId,Title,Description,Picture")] Recipes recipe, FormFile file)
+        public async Task<IActionResult> Create([Bind("RecipeId,Title,Description,Picture")] Recipes recipe, IFormFile Picture)
         {
-            recipe.Picture = file.FileName;
-            await UploadFile(file);
+            recipe.Picture = Picture.FileName;
+            await UploadFile(Picture);
 
-            if (ModelState.IsValid)
+            if (recipe.Picture != null && recipe.Title != null && recipe.Description != null)
             {
                 _context.Add(recipe);
                 await _context.SaveChangesAsync();
@@ -165,7 +165,6 @@ namespace Recipe.Controllers
             return (_context.Recipes?.Any(e => e.RecipeId == id)).GetValueOrDefault();
         }
 
-        [HttpPost]
         public async Task<IActionResult> UploadFile(IFormFile file)
         {
             if (file == null || file.Length == 0)
@@ -175,7 +174,8 @@ namespace Recipe.Controllers
             else
             {
                 string fileName = file.FileName;
-                var filepath = "../images/" + fileName;
+
+                var filepath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
                 using (var stream = new FileStream(filepath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
