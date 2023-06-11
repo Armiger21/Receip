@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form enctype="multipart/form-data" method="post" asp-controller="Recipes" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
@@ -24,7 +24,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Picture" class="control-label"></label>
-                <input asp-for="Picture" class="form-control" />
+                <input type="file" name="FormFile" id="FormFile" />
                 <span asp-validation-for="Picture" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -37,6 +37,20 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+<script>
+    "use strict";
+
+    function AJAXSubmit(oFormElement) {
+        var oReq = new XMLHttpRequest();
+        oReq.onload = function (e) {
+            oFormElement.elements.namedItem("result").value =
+                'Result: ' + this.status + ' ' + this.statusText;
+        };
+        oReq.open("post", oFormElement.action);
+        oReq.send(new FormData(oFormElement));
+    }
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Recipe.Models;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace Recipe.Controllers
 {
@@ -56,8 +58,11 @@ namespace Recipe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RecipeId,Title,Description,Picture")] Recipes recipe)
+        public async Task<IActionResult> Create([Bind("RecipeId,Title,Description,Picture")] Recipes recipe, FormFile file)
         {
+            recipe.Picture = file.FileName;
+            await UploadFile(file);
+
             if (ModelState.IsValid)
             {
                 _context.Add(recipe);
@@ -158,6 +163,26 @@ namespace Recipe.Controllers
         private bool RecipeExists(int id)
         {
             return (_context.Recipes?.Any(e => e.RecipeId == id)).GetValueOrDefault();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadFile(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                throw new FileNotFoundException("The file was null.");
+            }
+            else
+            {
+                string fileName = file.FileName;
+                var filepath = "../images/" + fileName;
+                using (var stream = new FileStream(filepath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+            }
+
+            return Ok("File Upload Complete");
         }
     }
 }

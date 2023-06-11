@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -17,7 +16,7 @@ namespace Recipe.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Picture = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
+                    Picture = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,14 +30,14 @@ namespace Recipe.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RecipeId = table.Column<int>(type: "int", nullable: true)
+                    RecipesRecipeId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Ingredient", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Ingredient_Recipes_RecipeId",
-                        column: x => x.RecipeId,
+                        name: "FK_Ingredient_Recipes_RecipesRecipeId",
+                        column: x => x.RecipesRecipeId,
                         principalTable: "Recipes",
                         principalColumn: "RecipeId");
                 });
@@ -63,9 +62,9 @@ namespace Recipe.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ingredient_RecipeId",
+                name: "IX_Ingredient_RecipesRecipeId",
                 table: "Ingredient",
-                column: "RecipeId");
+                column: "RecipesRecipeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

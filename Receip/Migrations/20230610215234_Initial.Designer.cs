@@ -12,7 +12,7 @@ using Recipe.Models;
 namespace Recipe.Migrations
 {
     [DbContext(typeof(RecipeContext))]
-    [Migration("20230422234127_Initial")]
+    [Migration("20230610215234_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,17 +36,17 @@ namespace Recipe.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("RecipeId")
+                    b.Property<int?>("RecipesRecipeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RecipeId");
+                    b.HasIndex("RecipesRecipeId");
 
-                    b.ToTable("Ingredient");
+                    b.ToTable("Ingredient", (string)null);
                 });
 
-            modelBuilder.Entity("Recipe.Models.Recipe", b =>
+            modelBuilder.Entity("Recipe.Models.Recipes", b =>
                 {
                     b.Property<int>("RecipeId")
                         .ValueGeneratedOnAdd()
@@ -58,8 +58,9 @@ namespace Recipe.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("Picture")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("Picture")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -86,26 +87,26 @@ namespace Recipe.Migrations
 
                     b.HasKey("RecipeId", "StepNumber");
 
-                    b.ToTable("RecipeSteps");
+                    b.ToTable("RecipeSteps", (string)null);
                 });
 
             modelBuilder.Entity("Recipe.Models.Ingredient", b =>
                 {
-                    b.HasOne("Recipe.Models.Recipe", null)
+                    b.HasOne("Recipe.Models.Recipes", null)
                         .WithMany("Ingredients")
-                        .HasForeignKey("RecipeId");
+                        .HasForeignKey("RecipesRecipeId");
                 });
 
             modelBuilder.Entity("Recipe.Models.RecipeStep", b =>
                 {
-                    b.HasOne("Recipe.Models.Recipe", null)
+                    b.HasOne("Recipe.Models.Recipes", null)
                         .WithMany("Steps")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Recipe.Models.Recipe", b =>
+            modelBuilder.Entity("Recipe.Models.Recipes", b =>
                 {
                     b.Navigation("Ingredients");
 
