@@ -36,11 +36,10 @@
                     @Html.DisplayNameFor(model => model.Picture)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Picture)
-                </dd>
-            </dl>
-        </div>
 
+                    <img src="~/images/@Model.Picture" />
+                </dd>
+        </div>
     </div>
 
     <div id="bottom">
@@ -71,4 +70,32 @@
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.RecipeId">Edit</a> |
     <a asp-action="Index">Back to List</a>
+    <button class="print-button" onclick="window.print()">Print</button>
+
 </div>
+
+<style>
+    #top {
+        overflow: hidden;
+    }
+
+    #left {
+        width: 75%;
+        float: left;
+    }
+
+    .row: :after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .print-button {
+        padding: 10px 20px;
+        background-color: #337ab7;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+</style>

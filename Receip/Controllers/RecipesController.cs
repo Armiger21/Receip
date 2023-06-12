@@ -58,7 +58,7 @@ namespace Recipe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RecipeId,Title,Description,Picture")] Recipes recipe, IFormFile Picture)
+        public async Task<IActionResult> Create([Bind("RecipeId,Title,Description,Picture")] Recipes recipe, IFormFile Picture, string Ingredients, string Steps)
         {
             recipe.Picture = Picture.FileName;
             await UploadFile(Picture);

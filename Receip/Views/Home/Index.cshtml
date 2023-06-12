@@ -1,8 +1,35 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<style>
+    .text-center {
+        text-align: center;
+    }
 
+    .display-4 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 1.2rem;
+        color: #666;
+    }
+
+    a {
+        color: #337ab7;
+        text-decoration: none;
+    }
+
+    .World-of-warcraft-image{
+        max-width: 600px;
+        margin-bottom: 20px
+    }
+</style>
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
+    <img src="~/images/World-of-warcraft.jpg" alt="World-of-warcraft" class="World-of-warcraft-image"/>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
