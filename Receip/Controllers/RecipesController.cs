@@ -67,6 +67,9 @@ namespace Recipe.Controllers
             {
                 _context.Add(recipe);
                 await _context.SaveChangesAsync();
+                //add custom code to save ingriedents and steps
+                //Get the RecipeID recipe.RecipeID
+                //Insert the ingredients into the database INSERT INTO Ingredients [Name], [RecipesRecipeId] VALUES (recipe.Ingredients, recipe.RecipeID
                 return RedirectToAction(nameof(Index));
             }
             return View(recipe);
