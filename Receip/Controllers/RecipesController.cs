@@ -58,7 +58,7 @@ namespace Recipe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RecipeId,Title,Description,Picture")] Recipes recipe, IFormFile Picture)
+        public async Task<IActionResult> Create([Bind("RecipeId,Title,Description,Picture")] Recipes recipe, IFormFile Picture, string Ingredients, string Steps)
         {
             recipe.Picture = Picture.FileName;
             await UploadFile(Picture);
@@ -67,6 +67,9 @@ namespace Recipe.Controllers
             {
                 _context.Add(recipe);
                 await _context.SaveChangesAsync();
+                //add custom code to save ingriedents and steps
+                //Get the RecipeID recipe.RecipeID
+                //Insert the ingredients into the database INSERT INTO Ingredients [Name], [RecipesRecipeId] VALUES (recipe.Ingredients, recipe.RecipeID
                 return RedirectToAction(nameof(Index));
             }
             return View(recipe);
