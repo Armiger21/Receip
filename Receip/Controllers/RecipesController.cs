@@ -182,6 +182,8 @@ namespace Recipe.Controllers
             }
             var recipe = await _context.Recipes.
                 FindAsync(id);
+            List<Ingredient> ingredients = await _context.ingredients.Where(i => i.RecipesRecipeId == id).ToListAsync();
+            recipe.Ingredients = ingredients;
             List<RecipeStep> steps = await _context.RecipeSteps.Where(s => s.RecipeId == id).ToListAsync();
             recipe.Steps = steps;
 

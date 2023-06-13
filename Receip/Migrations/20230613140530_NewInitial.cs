@@ -4,7 +4,7 @@
 
 namespace Recipe.Migrations
 {
-    public partial class Initial : Migration
+    public partial class NewInitial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,19 +27,19 @@ namespace Recipe.Migrations
                 name: "Ingredient",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RecipesRecipeId = table.Column<int>(type: "int", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    RecipesRecipeId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ingredient", x => x.Id);
+                    table.PrimaryKey("PK_Ingredient", x => new { x.RecipesRecipeId, x.Id });
                     table.ForeignKey(
                         name: "FK_Ingredient_Recipes_RecipesRecipeId",
                         column: x => x.RecipesRecipeId,
                         principalTable: "Recipes",
-                        principalColumn: "RecipeId");
+                        principalColumn: "RecipeId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -60,11 +60,6 @@ namespace Recipe.Migrations
                         principalColumn: "RecipeId",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Ingredient_RecipesRecipeId",
-                table: "Ingredient",
-                column: "RecipesRecipeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
