@@ -60,7 +60,7 @@ namespace Recipe.Migrations
 
                     b.HasKey("RecipeId");
 
-                    b.ToTable("Recipes");
+                    b.ToTable("Recipes", (string)null);
                 });
 
             modelBuilder.Entity("Recipe.Models.RecipeStep", b =>
