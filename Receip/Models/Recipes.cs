@@ -22,6 +22,7 @@ namespace Recipe.Models
             modelBuilder.Entity<RecipeStep>().ToTable("RecipeSteps");
 
             modelBuilder.Entity<RecipeStep>().HasKey(s => new { s.RecipeId, s.StepNumber });
+            modelBuilder.Entity<Ingredient>().HasKey(i => new { i.RecipesRecipeId, i.Id });
         }
     }
 

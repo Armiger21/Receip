@@ -63,13 +63,40 @@ namespace Recipe.Controllers
             recipe.Picture = Picture.FileName;
             await UploadFile(Picture);
 
+
             if (recipe.Picture != null && recipe.Title != null && recipe.Description != null)
             {
+                string i = Ingredients;
+                List<Ingredient> ing = new List<Ingredient>();
+                Ingredient ingredient = new Ingredient { Name = i };
+                ing.Add(ingredient);
+                recipe.Ingredients = ing;
+
+                string s = Steps;
+                List<RecipeStep> spt = new List<RecipeStep>();
+                RecipeStep recipeStep = new RecipeStep { Step = s, StepNumber = 1 };
+                spt.Add(recipeStep);
+                recipe.Steps = spt;
+
                 _context.Add(recipe);
                 await _context.SaveChangesAsync();
+
+
+                //How do I capture a List of Objects in a View
+
+                //_context.ingredients.Add(recipe.Ingredient);
+                //_context.RecipeSteps.Add(recipe.RecipeSteps);
+
                 //add custom code to save ingriedents and steps
                 //Get the RecipeID recipe.RecipeID
                 //Insert the ingredients into the database INSERT INTO Ingredients [Name], [RecipesRecipeId] VALUES (recipe.Ingredients, recipe.RecipeID
+                ////string[] ingredientsList = Ingredients.Split(',');
+
+                ////foreach (string ingredient in ingredientsList)
+                ////{
+                ////    string insertQuery = $"";
+                ////    await _context.Database.ExecuteSqlRawAsync(insertQuery);
+                ////}
                 return RedirectToAction(nameof(Index));
             }
             return View(recipe);
@@ -153,7 +180,11 @@ namespace Recipe.Controllers
             {
                 return Problem("Entity set 'RecipeContext.Recipes'  is null.");
             }
-            var recipe = await _context.Recipes.FindAsync(id);
+            var recipe = await _context.Recipes.
+                FindAsync(id);
+            List<RecipeStep> steps = await _context.RecipeSteps.Where(s => s.RecipeId == id).ToListAsync();
+            recipe.Steps = steps;
+
             if (recipe != null)
             {
                 _context.Recipes.Remove(recipe);
