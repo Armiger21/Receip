@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'PorfRecipes'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C74559AB73814E298BBDA5C90DC3CFAD }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5E91A5B905C04A35883FF2E29012C2A9 }}
           package: .
