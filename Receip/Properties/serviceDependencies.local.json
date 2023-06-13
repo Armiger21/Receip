@@ -6,11 +6,11 @@
       "type": "secrets.user",
       "connectionId": null
     },
-    "mssql2": {
+    "mssql1": {
       "secretStore": "LocalSecretsFile",
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/recipeappdb/databases/Recipe_db",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/recipeappdatabase/databases/Recipe_db",
       "type": "mssql.azure",
-      "connectionId": "ConnectionStrings:AzureDB"
+      "connectionId": "ConnectionStrings:AzureAppDb"
     }
   }
 }
